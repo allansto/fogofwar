@@ -29,8 +29,8 @@ class Controller(threading.Thread):
 
 		time.sleep(60)
 
-		items = re.compile('DROP\s+all\s+--\s+(\S+)\s+0.0.0.0/0\s+/\*\s+ttl=(\d+)\s+\*/',re.LOCALE)
-		itemsv6 = re.compile('DROP\s+all\s+(\S+)\s+::/0\s+/\*\s+ttl=(\d+)\s+\*/',re.LOCALE)
+		items = re.compile('DROP\s+all\s+--\s+(\S+)\s+0.0.0.0/0\s+/\*\s+ttl=(\d+)\s+\*/')
+		itemsv6 = re.compile('DROP\s+all\s+(\S+)\s+::/0\s+/\*\s+ttl=(\d+)\s+\*/')
 
 		while True:
 			# check for shutdown signal
