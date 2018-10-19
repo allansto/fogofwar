@@ -67,7 +67,11 @@ def main():
 		for port in ports:
 			log.info("FogofWar: Listening on port %s" % (port))
 			port = int(port)
-			server = honeyport.v6ThreadingTCPServer(("::",port),honeyport.SocketListener,msgqueue)
+			try:
+				server = honeyport.v6ThreadingTCPServer(("::",port),honeyport.SocketListener,msgqueue)
+			except Exception as e:
+				log.error('FogofWar: Could not instantiate an instance for port %s. Already bound?'%port)
+				pass
 			server.msgqueue = msgqueue
 			server.log = log
 			server.port = port
