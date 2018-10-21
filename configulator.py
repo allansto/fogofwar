@@ -13,7 +13,6 @@ class configulator:
 		config = configparser.ConfigParser()
 		# if it does not exist write some defaults to file
 		if not os.path.isfile('fogofwar.cfg'):
-			print("Creating new Config File")
 			# honey section
 			config.add_section('HONEY')
 			config.set('HONEY','ports',"135,445,22,1433,3389,8080,21,5900,25,53,110,1723,1337,10000,5800,44443,5060")
