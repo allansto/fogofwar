@@ -10,11 +10,11 @@ import os
 import queue
 import socketserver
 
-import configulator
-import fogcontrol
-import tablescontrol
-import honeyport
-import historycontrol
+from config import configulator
+from fog import fogcontrol
+from tables import tablescontrol
+from honeyports import honeyport
+from history import historycontrol
 
 def main():
 	# read config
