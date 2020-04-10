@@ -24,5 +24,3 @@ StandardError=syslog
 WantedBy=multi-user.target
 </pre>
 
-<h2>Dependencies<h2>
-* python3-netaddr

@@ -4,7 +4,8 @@ import time
 import threading
 import queue
 import sys
-import netaddr
+#import netaddr
+import ipaddress
 import sqlite3
 import requests
 import json
@@ -127,7 +128,7 @@ class Controller(threading.Thread):
 		wl = c.get("CONTROL","whitelist")
 		wips = wl.split(',')
 		for wip in wips:
-			if (self.tables.is_ip_in_subnet(ip=netaddr.IPAddress(ip),net=netaddr.IPNetwork(wip))):
+			if (self.tables.is_ip_in_subnet(ip=ipaddress.ip_address(ip),net=ipaddress.ip_network(wip))):
 				return True
 		return False
 

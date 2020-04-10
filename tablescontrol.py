@@ -8,7 +8,7 @@ import re
 import subprocess
 import logging
 import os
-import netaddr
+import ipaddress
 
 class Controller(threading.Thread):
 	def __init__(self,config,msgqueue,log):
@@ -74,7 +74,7 @@ class Controller(threading.Thread):
 	def is_valid_ipv4(self,ip):
 		ver = 0
 		try:
-			x = netaddr.IPAddress(ip)
+			x = ipaddress.ip_address(ip)
 			ver = x.version
 		except:
 			pass
@@ -87,7 +87,7 @@ class Controller(threading.Thread):
 	def is_valid_ipv6(self,ip):
 		ver = 0
 		try:
-			x = netaddr.IPAddress(ip)
+			x = ipaddress.ip_address(ip)
 			ver = x.version
 		except:
 			pass
@@ -98,34 +98,32 @@ class Controller(threading.Thread):
 			return False
 
 	def is_valid_subnet(self,net):
-		n = netaddr.IPNetwork(net)
+		n = ipaddress.ip_network(net)
 		return True
 
 	def is_ip_in_subnet(self,ip,net):
-		try:
-			if (net.broadcast is None):
-				if (ip == net.network):
-					return True
-			else:
-				if (ip >= net.network and ip <= net.broadcast):
-					return True
-		except TypeError:
-			print('Problematic: ',ip,net.network,net.broadcast)
+                try:
+                    if (net.broadcast_address is None):
+                        if (ip == net.network_address):
+                            print(ip)
+                            return True
+                        else:
+                            if (ip >= net.network_address and ip <= net.broadcast_address):
+                                print(ip)
+                                return True
+                except TypeError:
+                    print('Problematic: ',ip.version,ip.IPv4Address,net.network_address,net.broadcast_address)
 			
 
 	def normalize_ip(self,ip):
 		# if it is a v6 address, check for an remove interface
-		ip = ip.split('%')[0]
+                ip = ip.split('%')[0]
 
 		# if it is a v4 embedded in a v6 address, convert it
-		if (self.is_valid_ipv6(ip)):
-			testip = netaddr.IPAddress(ip)
-			try:
-				ip = testip.ipv4()
-			except:
-				pass
+                if (ipaddress.ip_address(ip).ipv4_mapped):
+                    ip = ipaddress.ip_address(ip).ipv4_mapped
 
-		return(ip)
+                return(ip)
 
 #
 # Return an iterator for each table
